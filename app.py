@@ -25,87 +25,122 @@ if "appt_confirmed" not in st.session_state:
 if "appt_details" not in st.session_state:
     st.session_state.appt_details = ""
 
+    
+primaryColor="#df7448"
+backgroundColor="#bfd8d2"
+secondaryBackgroundColor="#dcb239"
+textColor="#fedcd2"
 
-base="light"
-primaryColor="#0066cc"
-backgroundColor="#ffffff"
-secondaryBackgroundColor="#f5f5f5"
-textColor="#000000"
-font="sans serif"
 import streamlit as st
 
-# Inject custom CSS
+# --- Pastel Theme CSS ---
 st.markdown("""
     <style>
-    /* ----- Overall App Background ----- */
-    .stApp {
-        background-color: #F4F6F8; /* Light gray background */
-        color: #1E1E2F; /* Default font color (primary) */
-        font-family: 'Arial', sans-serif; /* Font style */
+    /* Main page background */
+    [data-testid="stAppViewContainer"] {
+        background-color: #bfd8d2;  /* backgroundColor */
+        color: #fedcd2;             /* textColor */
     }
 
-    /* ----- Headings ----- */
-    h1, h2, h3, h4, h5, h6 {
-        color: #1E1E2F; /* Dark font for headings */
-        font-weight: bold;
+    /* Sidebar background */
+    [data-testid="stSidebar"] {
+        background-color: #dcb239;  /* secondaryBackgroundColor */
+        color: #fedcd2;
     }
 
-    /* ----- Paragraphs / normal text ----- */
-    p, span, li, div {
-        color: #5F5F7A; /* Secondary font color */
+    /* Buttons */
+    div.stButton > button:first-child {
+        background-color: #df7448;  /* primaryColor */
+        color: #fedcd2;
+        border-radius: 10px;
+        font-weight: 600;
+        padding: 8px 16px;
+    }
+    div.stButton > button:first-child:hover {
+        background-color: #e36e35;
+        color: white;
     }
 
-    /* ----- Highlighted / Alert Text ----- */
-    .warning {
-        color: #FF4D4F; /* Red for warning / risk */
-        font-weight: bold;
-    }
-    .success {
-        color: #52C41A; /* Green for success / good result */
-        font-weight: bold;
-    }
-    .info {
-        color: #1890FF; /* Blue for information / highlight */
-        font-weight: bold;
-    }
-
-    /* ----- Cards / Boxes ----- */
-    .stCard {
-        background-color: #FFFFFF;
+    /* Cards / Containers */
+    .card {
+        background-color: #dcb239;  /* secondaryBackgroundColor */
         border-radius: 15px;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        padding: 15px;
-        margin-bottom: 15px;
+        padding: 20px;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        margin-top: 20px;
+        color: #333333;
     }
 
-    /* ----- Buttons ----- */
-    div.stButton > button {
-        background-color: #1890FF; /* Button color */
-        color: #FFFFFF; /* Font color in button */
-        border-radius: 10px;
-        padding: 10px 20px;
-        font-weight: bold;
-        border: none;
-    }
-    div.stButton > button:hover {
-        background-color: #1475CC; /* Hover color */
+    /* Titles */
+    h1, h2, h3 {
+        color: #df7448;  /* primaryColor */
     }
 
-    /* ----- Input boxes ----- */
-    .stTextInput>div>div>input {
+    /* Inputs */
+    .stTextInput, .stNumberInput, .stSelectbox {
         background-color: #FFFFFF;
-        color: #1E1E2F; /* Input font color */
         border-radius: 10px;
-        border: 1px solid #D9D9D9;
-        padding: 8px;
-    }
-
-    /* ----- Charts / Progress Bars ----- */
-    .stProgress > div > div > div {
-        background: linear-gradient(90deg, #1890FF, #52C41A); /* Gradient for progress */
+        border: 1px solid #df7448;
+        color: #333333;
     }
     </style>
 """, unsafe_allow_html=True)
+
+
+st.markdown("""
+    <style>
+    /* Main app background */
+    .css-18e3th9 {  /* Streamlit main content area */
+        background-color: #FAFAFA;
+    }
+
+    /* Sidebar background */
+    [data-testid="stSidebar"] {
+    background-color: #dcb239;
+    color: #8B0000;   /* dark red text in sidebar */
+    }
+
+
+    /* Card styling */
+    .card {
+        background-color: #E3F2FD;
+        border-radius: 15px;
+        padding: 20px;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        margin-top: 20px;
+    }
+
+    /* Buttons */
+    div.stButton > button:first-child {
+        background-color: #F8BBD0;
+        color: #333333;
+        border: none;
+        border-radius: 12px;
+        font-weight: 600;
+        padding: 8px 16px;
+    }
+    div.stButton > button:first-child:hover {
+        background-color: #F48FB1;
+        color: white;
+    }
+
+    /* Titles & headers */
+    h1, h2, h3, h4, h5 {
+    color: #8B0000;  /* dark red headers */
+    font-weight: 600;
+    }
+
+
+    /* Inputs */
+    .stTextInput, .stNumberInput, .stSelectbox {
+        background-color:#DCB239;
+        border-radius: 10px;
+        border: 1px solid #B2EBF2;
+    }
+    </style>
+""", unsafe_allow_html=True)
+
+
 
 
 # Load your trained model (adjust path if needed)
@@ -240,6 +275,8 @@ st.markdown("""
 </div>
 """, unsafe_allow_html=True)
 # Inputs with emojis
+warm_red = "#8B0000"
+
 age = st.number_input("👶 Age", min_value=1, max_value=100, value=50)
 male = st.selectbox("👨‍⚕️ Gender", options=[("Male", 1), ("Female", 0)], index=0, format_func=lambda x: x[0])[1]
 cigsPerDay = st.number_input("🚬 Cigarettes Per Day", min_value=0, max_value=100, value=0)
@@ -254,7 +291,7 @@ BPMeds = st.selectbox(
 
 # Sub-questions with indentation
 if BPMeds == 1:
-    st.markdown('<div style="margin-left: 30px;">**Please provide your current blood pressure levels:**</div>', unsafe_allow_html=True)
+    st.markdown('<div style="margin-left: 30px;color:{warm_red};">**Please provide your current blood pressure levels:**</div>', unsafe_allow_html=True)
     sysBP = st.number_input("💓 Systolic Blood Pressure (mm Hg)", min_value=80, max_value=250, value=120, key="sysBP")
     diaBP = st.number_input("🩺 Diastolic Blood Pressure (mm Hg)", min_value=50, max_value=150, value=80, key="diaBP")
 else:
@@ -271,7 +308,7 @@ diabetes = st.selectbox(
 
 # Sub-questions with indentation
 if diabetes == 1:
-    st.markdown('<div style="margin-left: 30px;">**Please enter your current blood glucose level:**</div>', unsafe_allow_html=True)
+    st.markdown('<div style="margin-left: 30px;color:{warm_red};">**Please enter your current blood glucose level:**</div>', unsafe_allow_html=True)
     glucose = st.number_input("🍬 Blood Glucose (mg/dL)", min_value=50, max_value=300, value=85, key="glucose")
 else:
     glucose = None
@@ -387,7 +424,8 @@ if st.button("🔍 Predict Risk"):
 
     # --- Display diet plan based on risk ---
     st.markdown("---")
-    st.markdown(f"## 🥗 Recommended Diet Plan: **{diet_type}**")
+    st.markdown(f'<h2 style="color:#DF744A;">{diet_type}</h2>', unsafe_allow_html=True)
+
 
     import plotly.graph_objects as go
 
@@ -433,7 +471,8 @@ if st.button("🔍 Predict Risk"):
     df = pd.DataFrame({'Day': days, 'Calories': calories})
     df.set_index('Day', inplace=True)
 
-    st.markdown("### 🔥 Weekly Calorie Intake Recommendation")
+    st.markdown('<h3 style="color:#DF744A;">🔥 Weekly Calorie Intake Recommendation</h3>', unsafe_allow_html=True)
+
     st.bar_chart(df)
 
 
@@ -511,7 +550,7 @@ doctors = [
 
 if st.session_state.percent is not None:
     st.markdown("---")
-    st.header("🩺 Book / Auto-assign a Doctor Appointment")
+    st.markdown('<h1 style="color:#DF744A;">🩺 Book / Auto-assign a Doctor Appointment</h1>', unsafe_allow_html=True)
 
     if not st.session_state.appt_confirmed:
         if st.button("✅ Auto-assign & Confirm Appointment", key="appt_btn"):
@@ -527,7 +566,9 @@ if st.session_state.percent is not None:
                 f"**{appt_dt.strftime('%d-%m-%Y')} at {appt_dt.strftime('%I:%M %p')}**.\n"
                 f"📍 Hospital: {selected['hospital']} — {selected['location']}"
             )
-            st.session_state.appt_confirmed = True
+            
+            st.markdown(f'<span style="color:#006400;">{st.session_state.appt_details}</span>', unsafe_allow_html=True)
+        
 
     if st.session_state.appt_confirmed:
         st.success(st.session_state.appt_details)
